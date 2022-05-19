@@ -19,4 +19,12 @@ export default class TaskModel {
 
     return { id: result.insertId, name, status };
   }
+
+  async update({ id, name, status }: ITask) {
+    const sql = `UPDATE to_do_list.Task SET name = ?, status = ? where id = ?`;
+  
+    await this.connection.execute<ResultSetHeader>(sql, [name, status, id]);
+
+    return {name, status};
+  }
 }

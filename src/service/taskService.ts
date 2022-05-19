@@ -11,4 +11,8 @@ export default class TaskService {
   create = async ({ name, status }: ITask) => {
     return await this.taskModel.create({name, status});
   }
+
+  update = async ({ id, name, status }: ITask) => {
+    return await this.taskModel.update({ id, name, status });
+  }
 }
