@@ -1,4 +1,5 @@
-import { Pool, RowDataPacket } from "mysql2/promise";
+import { Pool, ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { ITask } from "../interface/Task";
 
 export default class TaskModel {
   constructor(private connection: Pool) {}
@@ -9,5 +10,13 @@ export default class TaskModel {
     );
 
     return result;
+  }
+
+  async create({ name, status }: ITask) {
+    const sql = `INSERT INTO to_do_list.Task(name, status) VALUES (?, ?);`;
+    
+    const [result] = await this.connection.execute<ResultSetHeader>(sql, [name, status]);
+
+    return { id: result.insertId, name, status };
   }
 }
