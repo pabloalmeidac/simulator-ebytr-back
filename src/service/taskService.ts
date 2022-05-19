@@ -12,7 +12,12 @@ export default class TaskService {
     return await this.taskModel.create({name, status});
   }
 
-  update = async ({ id, name, status }: ITask) => {
-    return await this.taskModel.update({ id, name, status });
+  update = async (id: number, status: string) => {
+    const response = await this.taskModel.getById(id);
+    
+    if(!response.length) return undefined;
+    
+    await this.taskModel.update(id, status);
+    return response;
   }
 }

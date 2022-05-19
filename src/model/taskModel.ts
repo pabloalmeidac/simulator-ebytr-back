@@ -12,6 +12,13 @@ export default class TaskModel {
     return result;
   }
 
+  async getById(id: number) {
+    const sql =  'SELECT * FROM to_do_list.Task where id = ?;';
+
+    const [result] = await this.connection.execute<RowDataPacket[]>(sql, [id]);
+    return result;
+  }
+
   async create({ name, status }: ITask) {
     const sql = `INSERT INTO to_do_list.Task(name, status) VALUES (?, ?);`;
     
@@ -20,11 +27,9 @@ export default class TaskModel {
     return { id: result.insertId, name, status };
   }
 
-  async update({ id, name, status }: ITask) {
-    const sql = `UPDATE to_do_list.Task SET name = ?, status = ? where id = ?`;
+  async update(id: number, status: string) {
+    const sql = `UPDATE to_do_list.Task SET status = ? where id = ?`;
   
-    await this.connection.execute<ResultSetHeader>(sql, [name, status, id]);
-
-    return {name, status};
+    return await this.connection.execute<ResultSetHeader>(sql, [status, id]);
   }
 }

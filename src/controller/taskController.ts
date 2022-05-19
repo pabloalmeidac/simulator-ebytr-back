@@ -28,9 +28,9 @@ export default class TaskController {
   update = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const { name, status } = req.body;
-      
-      const response: ITask = await this.taskService.update({ id: parseInt(id), name, status} as ITask);
+      const { status } = req.body;
+  
+      const response = await this.taskService.update(parseInt(id), status);
 
       if(!response) return res.status(404).json({ message: 'Não foi possivel encontrar a tarefa'})
 
