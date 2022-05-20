@@ -13,5 +13,6 @@ const taskRouter = Router();
 taskRouter.get('/', taskController.findAll);
 taskRouter.post('/', taskController.create);
 taskRouter.put('/:id', taskController.update);
+taskRouter.delete('/:id', taskController.remove);
 
 export default taskRouter;
