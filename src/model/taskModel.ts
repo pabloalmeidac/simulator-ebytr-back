@@ -1,4 +1,4 @@
-import { Pool, ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { OkPacket, Pool, ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { ITask } from "../interface/Task";
 
 export default class TaskModel {
@@ -31,5 +31,10 @@ export default class TaskModel {
     const sql = `UPDATE to_do_list.Task SET status = ? where id = ?`;
   
     return await this.connection.execute<ResultSetHeader>(sql, [status, id]);
+  }
+
+  async remove(id: number) {
+    const sql = `DELETE FROM to_do_list.Task WHERE id = ?`;
+    await this.connection.execute<OkPacket>(sql, [ id]);
   }
 }

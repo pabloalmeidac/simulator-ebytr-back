@@ -39,4 +39,15 @@ export default class TaskController {
       next(error);
     }
   };
+
+  remove = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      await this.taskService.remove(parseInt(id));
+      return res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  };
 }

@@ -16,8 +16,10 @@ export default class TaskService {
     const response = await this.taskModel.getById(id);
     
     if(!response.length) return undefined;
-    
+
     await this.taskModel.update(id, status);
     return response;
   }
+
+  remove = async (id: number) => await this.taskModel.remove(id);
 }
